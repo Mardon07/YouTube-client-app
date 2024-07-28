@@ -1,0 +1,19 @@
+<mat-card [appBorderColor]="daysSincePublished">
+  <img mat-card-image [src]="thumbnailUrl" alt="Video thumbnail" />
+  <mat-card-content>
+    <p class="views-count"><mat-icon> visibility</mat-icon>{{ viewCount }}</p>
+    <p class="likes-count"><mat-icon> favorite</mat-icon>{{ likeCount }}</p>
+    <p class="dislikes-count">
+      <mat-icon> thumb_down</mat-icon>{{ dislikeCount }}
+    </p>
+    <p class="comments-count"><mat-icon> forum</mat-icon>{{ commentCount }}</p>
+  </mat-card-content>
+  <mat-card-header>
+    <mat-card-title>{{ videoTitle }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions>
+    <a [routerLink]="['video', id]" routerLinkActive="active"
+      ><app-custom-button>more...</app-custom-button></a
+    >
+  </mat-card-actions>
+</mat-card>

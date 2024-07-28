@@ -1,0 +1,28 @@
+<div class="container">
+  <button mat-icon-button class="back-button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="image-container">
+    <img [src]="videoDetail?.snippet?.thumbnails?.high?.url" alt="{{ videoDetail?.snippet?.title }}">
+    <div class="image-overlay">
+      <h1>{{ videoDetail?.snippet?.title }}</h1>
+      <p>#{{ videoDetail?.id }}</p>
+    </div>
+  </div>
+  <div class="details-container">
+    <div class="header">
+      <h2>{{ videoDetail?.snippet?.title }}</h2>
+      <p class="date">{{ videoDetail?.snippet?.publishedAt | date: 'fullDate' }}</p>
+    </div>
+    <div class="description">
+      <h3>Description:</h3>
+      <p>{{ videoDetail?.snippet?.description }}</p>
+    </div>
+    <div class="statistics">
+      <p><mat-icon>visibility</mat-icon> {{ videoDetail?.statistics?.viewCount }}</p>
+      <p><mat-icon>thumb_up</mat-icon> {{ videoDetail?.statistics?.likeCount }}</p>
+      <p><mat-icon>thumb_down</mat-icon> {{ videoDetail?.statistics?.dislikeCount }}</p>
+      <p><mat-icon>comment</mat-icon> {{ videoDetail?.statistics?.commentCount }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="card-container">
+  <div *ngFor="let item  of filteredResults | searchFilter: filterQuery">
+    <app-search-item
+      *ngIf="searchQuery"
+      [videoTitle]="item.snippet.title"
+      [thumbnailUrl]="item.snippet.thumbnails.default.url"
+      [viewCount]="item.statistics.viewCount"
+      [likeCount]="item.statistics.likeCount"
+      [dislikeCount]="item.statistics.dislikeCount"
+      [commentCount]="item.statistics.commentCount"
+      [publishedAt]="item.snippet.publishedAt"
+      [id]="item.id"
+    >
+    </app-search-item>
+  </div>
+</div>
