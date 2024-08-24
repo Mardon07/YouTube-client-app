@@ -1,0 +1,65 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <mat-toolbar class="toolbar">
+        <div class="logo">
+          <img src="logo.png" alt="Logo" />
+        </div>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              placeholder="What are you want to find out?"
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearchChange($event)"
+              name="searchQuery"
+              class="search-input"
+            />
+          </mat-form-field>
+          <!-- <button
+            (click)="onSearch()"
+            mat-raised-button
+            class="btn-search"
+            color="blue"
+          >
+            search
+          </button> -->
+        </form>
+        <button
+          (click)="toggleFilter()"
+          mat-icon-button
+          type="button"
+          class="settings-button"
+        >
+          <mat-icon>tune</mat-icon>
+        </button>
+
+        <a routerLink="/favorite" routerLinkActive="active"
+          ><app-custom-button
+            ><mat-icon>favorite_border</mat-icon></app-custom-button
+          ></a
+        >
+      </mat-toolbar>
+      <div class="user-info">
+        <ng-container *ngIf="isLoggedIn | async as loggedIn; else loggedOut">
+          <app-custom-button (click)="logout()">Logout</app-custom-button>
+        </ng-container>
+        <ng-template #loggedOut>
+          <app-custom-button (click)="login()">Login</app-custom-button>
+        </ng-template>
+      </div>
+    </div>
+
+    <div *ngIf="filterButtonStatus" class="sorting-criteria">
+      <span>Sorting by:</span>
+      <a href="#" (click)="onSortChange('date')">date</a> |
+      <a href="#" (click)="onSortChange('views')">count of views</a> |
+      <a href="#">by word or sentence</a>
+      <input
+        matInput
+        [(ngModel)]="filterQuery"
+        (ngModelChange)="onFilterChange($event)"
+      />
+    </div>
+  </div>
+</header>

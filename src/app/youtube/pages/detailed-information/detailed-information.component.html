@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="card-video" *ngIf="videoDetail$ | async">
+    <button mat-icon-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="image-container">
+      <img
+        [src]="(videoDetail$ | async)?.snippet?.thumbnails?.high?.url"
+        alt="{{ (videoDetail$ | async)?.snippet?.title }}"
+      />
+      <div class="image-overlay">
+        <h1>{{ (videoDetail$ | async)?.snippet?.title }}</h1>
+        <p>#{{ (videoDetail$ | async)?.id }}</p>
+      </div>
+    </div>
+    <div class="details-container">
+      <div class="header">
+        <h2>{{ (videoDetail$ | async)?.snippet?.title }}</h2>
+        <p class="date">
+          {{ (videoDetail$ | async)?.snippet?.publishedAt | date: 'fullDate' }}
+        </p>
+      </div>
+      <div class="description">
+        <h3>Description:</h3>
+        <p>{{ (videoDetail$ | async)?.snippet?.description }}</p>
+      </div>
+      <div class="statistics">
+        <p>
+          <mat-icon>visibility</mat-icon>
+          {{ (videoDetail$ | async)?.statistics?.viewCount }}
+        </p>
+        <p>
+          <mat-icon>thumb_up</mat-icon>
+          {{ (videoDetail$ | async)?.statistics?.likeCount }}
+        </p>
+        <p>
+          <mat-icon>thumb_down</mat-icon>
+          {{ (videoDetail$ | async)?.statistics?.dislikeCount }}
+        </p>
+        <p>
+          <mat-icon>comment</mat-icon>
+          {{ (videoDetail$ | async)?.statistics?.commentCount }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="custom-card" *ngIf="cardDetail$ | async">
+    <button mat-icon-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="image-container">
+      <img
+        [src]="(cardDetail$ | async)?.imageUrl"
+        alt="{{ (cardDetail$ | async)?.title }}"
+      />
+      <div class="image-overlay">
+        <h1>{{ (cardDetail$ | async)?.title }}</h1>
+        <p>#{{ (cardDetail$ | async)?.id }}</p>
+      </div>
+    </div>
+    <div class="details-container">
+      <div class="header">
+        <h2>{{ (cardDetail$ | async)?.title }}</h2>
+        <p class="date">
+          {{ (cardDetail$ | async)?.creationDate | date: 'fullDate' }}
+        </p>
+      </div>
+      <div class="description">
+        <h3>Description:</h3>
+        <p>{{ (cardDetail$ | async)?.description }}</p>
+      </div>
+    </div>
+    <button (click)="deleteCustomCard()" class="delete-custom-card">Delete</button>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<mat-card [appBorderColor]="daysSincePublished">
+  <img mat-card-image [src]="thumbnailUrl" alt="Video thumbnail" />
+
+  <mat-card-header>
+    <mat-card-title>{{ videoTitle }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions>
+    <a [routerLink]="['video', id]" routerLinkActive="active"
+      ><app-custom-button>more...</app-custom-button></a
+    >
+  </mat-card-actions>
+</mat-card>
