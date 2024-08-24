@@ -1,7 +1,19 @@
 <div class="card-container">
-  <div *ngFor="let item  of filteredResults | searchFilter: filterQuery">
+  
+  
+  <div *ngFor="let item of customCardResults$ | async">
+    <app-custom-card
+      [videoTitle]="item.title"
+      [thumbnailUrl]="item.imageUrl"
+      [publishedAt]="item.creationDate"
+      [commentCount]="item.description"
+      [id]="item.id"
+    >
+    </app-custom-card>
+  </div>
+  <div *ngFor="let item of filteredResults$ | async">
     <app-search-item
-      *ngIf="searchQuery"
+      *ngIf="filteredResults$ | async"
       [videoTitle]="item.snippet.title"
       [thumbnailUrl]="item.snippet.thumbnails.default.url"
       [viewCount]="item.statistics.viewCount"
@@ -10,7 +22,13 @@
       [commentCount]="item.statistics.commentCount"
       [publishedAt]="item.snippet.publishedAt"
       [id]="item.id"
+      [item]="item"
     >
     </app-search-item>
   </div>
+</div>
+
+<div  class="pagination-buttons" *ngIf="filteredResults$ | async">
+  <button (click)="loadPrevPage()" >Prev</button>
+  <button (click)="loadNextPage()" >Next</button>
 </div>

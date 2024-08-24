@@ -1,13 +1,13 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { appConfig } from './app.config';
-import { routeConfig } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { SearchService } from './shared/services/search.service';
 import { YoutubeModule } from './youtube/youtube.module';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FavoriteModule } from './favorite/favorite.module';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +19,11 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     RouterModule,
     AuthModule,
     YoutubeModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FavoriteModule
   ],
-  providers: [SearchService, ],
+  providers: [SearchService, MatDatepickerModule, MatNativeDateModule],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

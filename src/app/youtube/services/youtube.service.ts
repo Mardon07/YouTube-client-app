@@ -1,18 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as response from '../../../assests/mock/response.json';
-import { ResponseItem } from '../models/video-response.model';
+import { map, Observable } from 'rxjs';
+import { ResponseData, ResponseItem } from '../models/video-response.model';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class YoutubeService {
-  private data: ResponseItem[] = response.items;
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
-
-  getVideoDetail(videoId: string): Promise<ResponseItem | undefined> {
-    return new Promise((resolve) => {
-      const videoDetail = this.data.find(item => item.id === videoId);
-      resolve(videoDetail);
-    });
+  getVideoDetails(videoIds: string): Observable<ResponseItem> {
+    const url = `/videos?id=${videoIds}&part=snippet,statistics`;
+    return this.http
+      .get<ResponseData>(url)
+      .pipe(map((response) => response.items[0]));
   }
 }

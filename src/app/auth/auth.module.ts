@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
@@ -8,9 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CardCreationComponent } from './components/card-creation/card-creation.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, CardCreationComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,8 +21,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [AuthService],
-  exports: [LoginComponent],
+  exports: [LoginComponent, CardCreationComponent],
 })
 export class AuthModule {}

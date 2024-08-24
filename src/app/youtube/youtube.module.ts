@@ -11,6 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { RouterModule } from '@angular/router';
 import { DetailedInformationComponent } from './pages/detailed-information/detailed-information.component';
+import { CustomCardComponent } from './components/custom-card/custom-card.component';
+import { FavoritePageComponent } from '../favorite/favorite-page/favorite-page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { DetailedInformationComponent } from './pages/detailed-information/detai
     BorderColorDirective,
     SearchFilterPipe,
     DetailedInformationComponent,
+    CustomCardComponent,
   ],
   imports: [
     MatButtonModule,

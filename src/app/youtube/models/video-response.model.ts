@@ -5,13 +5,28 @@ export interface ResponseData {
     totalResults: number;
     resultsPerPage: number;
   };
-  items: ResponseItem[];
+  items: ResponseItemVideo[] ;
+  nextPageToken: string
+  prevPageToken: string
 }
-
-export interface ResponseItem {
+export interface ResponseDataVideo {
   kind: string;
   etag: string;
-  id: string;
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
+  items: ResponseItemWithVideoId[];
+  nextPageToken: string
+  prevPageToken: string
+}
+
+
+export interface ResponseItem<T = string> {
+  kind: string;
+  etag: string;
+  id: T;
+  
   snippet: {
     publishedAt: string;
     channelId: string;
@@ -62,3 +77,64 @@ export interface ResponseItem {
     commentCount: string;
   };
 }
+
+// Пример использования с обычным строковым id
+export type ResponseItemVideo = ResponseItem<string>;
+
+// Пример использования с объектом в качестве id
+export type ResponseItemWithVideoId = ResponseItem<{ videoId: string }>;
+
+// export interface ResponseItem {
+//   kind: string;
+//   etag: string;
+//   id: string;
+//   snippet: {
+//     publishedAt: string;
+//     channelId: string;
+//     title: string;
+//     description: string;
+//     thumbnails: {
+//       default: {
+//         url: string;
+//         width: number;
+//         height: number;
+//       };
+//       medium: {
+//         url: string;
+//         width: number;
+//         height: number;
+//       };
+//       high: {
+//         url: string;
+//         width: number;
+//         height: number;
+//       };
+//       standard: {
+//         url: string;
+//         width: number;
+//         height: number;
+//       };
+//       maxres: {
+//         url: string;
+//         width: number;
+//         height: number;
+//       };
+//     };
+//     channelTitle: string;
+//     tags: string[];
+//     categoryId: string;
+//     liveBroadcastContent: string;
+//     localized: {
+//       title: string;
+//       description: string;
+//     };
+//     defaultAudioLanguage: string;
+//   };
+//   statistics: {
+//     viewCount: string;
+//     likeCount: string;
+//     dislikeCount: string;
+//     favoriteCount: string;
+//     commentCount: string;
+//   };
+// }

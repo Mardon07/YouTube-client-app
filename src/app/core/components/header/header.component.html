@@ -11,18 +11,19 @@
               matInput
               placeholder="What are you want to find out?"
               [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearchChange($event)"
               name="searchQuery"
               class="search-input"
             />
           </mat-form-field>
-          <button
+          <!-- <button
             (click)="onSearch()"
             mat-raised-button
             class="btn-search"
             color="blue"
           >
             search
-          </button>
+          </button> -->
         </form>
         <button
           (click)="toggleFilter()"
@@ -32,12 +33,20 @@
         >
           <mat-icon>tune</mat-icon>
         </button>
+
+        <a routerLink="/favorite" routerLinkActive="active"
+          ><app-custom-button
+            ><mat-icon>favorite_border</mat-icon></app-custom-button
+          ></a
+        >
       </mat-toolbar>
       <div class="user-info">
-        <span>Your Name</span>
-        <div class="login-logo">
-          <img src="login.png" alt="Login-logo" />
-        </div>
+        <ng-container *ngIf="isLoggedIn | async as loggedIn; else loggedOut">
+          <app-custom-button (click)="logout()">Logout</app-custom-button>
+        </ng-container>
+        <ng-template #loggedOut>
+          <app-custom-button (click)="login()">Login</app-custom-button>
+        </ng-template>
       </div>
     </div>
 
@@ -45,7 +54,7 @@
       <span>Sorting by:</span>
       <a href="#" (click)="onSortChange('date')">date</a> |
       <a href="#" (click)="onSortChange('views')">count of views</a> |
-      <a href="#" >by word or sentence</a>
+      <a href="#">by word or sentence</a>
       <input
         matInput
         [(ngModel)]="filterQuery"

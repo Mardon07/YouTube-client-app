@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { debounceTime, filter, Observable, Subject, switchMap } from 'rxjs';
+import { AuthService } from '../../../auth/services/auth.service';
+import { loadYouTubeVideosSuccess } from '../../../redux/actions/video.actions';
 import { SearchService } from '../../../shared/services/search.service';
 
 @Component({
@@ -7,23 +11,47 @@ import { SearchService } from '../../../shared/services/search.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   searchQuery = '';
+  private searchSubject = new Subject<string>();
   filterQuery = '';
   filterButtonStatus = false;
   currentSort: { criteria: string; order: 'asc' | 'desc' } = {
     criteria: 'date',
     order: 'asc',
   };
+  isLoggedIn: Observable<boolean> | undefined;
 
-  constructor(private searchService: SearchService) {}
+  constructor(
+    private searchService: SearchService,
+    private authService: AuthService,
+    private store: Store
+  ) {}
 
-  onSearch() {
-    this.searchService.setSearchQuery(this.searchQuery);
+  ngOnInit(): void {
+    this.searchSubject
+      .pipe(
+        filter((value) => value.length >= 3),
+        debounceTime(300),
+        switchMap((value) => this.searchService.searchVideos(value)),
+      )
+      .subscribe((videos) => {
+        
+        
+        // this.searchService.updateSearchResults(videos);
+        this.store.dispatch(loadYouTubeVideosSuccess({ videos }));
+      });
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
+  login() {
+    this.authService.login();
+  }
+  logout() {
+    this.authService.logout();
   }
 
-  onSearchChange(query: string) {
-    this.searchService.setSearchQuery(query);
+  onSearchChange(value: string): void {
+    this.searchSubject.next(value);
   }
 
   onSortChange(criteria: string) {

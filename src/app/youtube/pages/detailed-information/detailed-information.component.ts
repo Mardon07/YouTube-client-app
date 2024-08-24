@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VideoDetail } from '../../models/video-detail.model';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { removeCustomCard } from '../../../redux/actions/custom-card.actions';
+import { CustomCard } from '../../../redux/models/custom-card.model';
+import { AppState } from '../../../redux/reducers';
+import { selectGetCustomCardById } from '../../../redux/selectors/custom-card.selector';
+import { selectGetVideoById } from '../../../redux/selectors/video.selectors';
 import { ResponseItem } from '../../models/video-response.model';
 import { YoutubeService } from '../../services/youtube.service';
 
@@ -10,26 +16,31 @@ import { YoutubeService } from '../../services/youtube.service';
   styleUrls: ['./detailed-information.component.scss'],
 })
 export class DetailedInformationComponent implements OnInit {
-  videoDetail: ResponseItem | undefined;
-
+  videoDetail$: Observable<ResponseItem | undefined>;
+  cardDetail$: Observable<CustomCard | undefined>;
+  videoId: string | null = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private youtubeService: YoutubeService
-  ) {}
+    private youtubeService: YoutubeService,
+    private store: Store<AppState>,
+  ) {
+    this.videoId = this.route.snapshot.paramMap.get('id');
+    this.videoDetail$ = this.store.select(selectGetVideoById(this.videoId!));
+    this.cardDetail$ = this.store.select(selectGetCustomCardById(this.videoId!));
+  }
 
   ngOnInit() {
-    const videoId = this.route.snapshot.paramMap.get('id');
-    console.log(videoId);
+    this.videoId = this.route.snapshot.paramMap.get('id');
 
-    if (videoId) {
-      this.youtubeService.getVideoDetail(videoId).then((data) => {
-        this.videoDetail = data;
-      });
-    }
+  
   }
 
   goBack() {
     this.router.navigate(['/']);
+  }
+  deleteCustomCard(){
+    this.store.dispatch(removeCustomCard({cardId: this.videoId!}))
+    this.goBack()
   }
 }
